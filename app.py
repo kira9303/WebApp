@@ -118,40 +118,139 @@ def log_in():
 def user_page():
     return render_template('user.html')
 
-@app.route('/task')
+
+
+
+@app.route('/task', methods=["GET", "POST"])
 def task():
-    
     
     if request.method == "POST":
         
-    
-        task_id = request.form.get("task_ID")
-        task_id = int(task_id)
+        
+        task_id = request.form["task_id"]
+        task_id = str(task_id)
+        print(task_id)
       
     
-        password = request.form.get("task_name")
+        password = request.form["task_name"]
         password = str(password)
+        print(password)
         
-        detail = request.form.get("text")
+        detail = request.form["task_detail"]
         detail = str(detail)
+        print(detail)
         
         
-        insert_stmt = ("INSERT INTO user(id,Task_name,  task)" "VALUES (%s, %s, %s)")
+        insert_stmt = ("INSERT INTO tasks(id,task_name, task)" "VALUES (%s, %s, %s)")
         data = (task_id, password, detail)
        
-        connect, conn = connection()
-       #connect.execute("INSERT INTO database.task (ID, Team_name, lead_name, firstname, secondname, thirdname, fourthname) VALUES (?,?,?,?,?,?,?)")
-        connect.execute(insert_stmt, data)
-        conn.commit()
-        connect.close()
-        conn.close()
-    return render_template('task.html')  
-
-
-@app.route('/team')
-def team():
-    return render_template('teamdet.html')     
+        new_con, conny = connection()
     
+    
+    
+       #connect.execute("INSERT INTO database.task (ID, Team_name, lead_name, firstname, secondname, thirdname, fourthname) VALUES (?,?,?,?,?,?,?)")
+        new_con.execute(insert_stmt, data)
+        conny.commit()
+        new_con.close()
+        conny.close()
+    
+    return render_template('new_task.html')
+        #return render_template('task.html')
+
+
+@app.route('/team', methods=["GET", "POST"])
+def team():
+    if request.method == "POST":
+        
+        #team_id = request.form["team_id"]
+        #team_id = str(team_id)
+        #print(team_id)
+      
+    
+        team_name = request.form["team_name"]
+        team_name = str(team_name)
+        print(team_name)
+        
+        team_lead = request.form["team_leader"]
+        team_lead = str(team_lead)
+        print(team_lead)
+        
+        team_1 = request.form["team_1"]
+        team_1 = str(team_1)
+        
+        
+        team_2 = request.form["team_2"]
+        team_2 = str(team_2)
+        
+        team_3 = request.form["team_3"]
+        team_3 = str(team_3)
+        
+        team_4 = request.form["team_4"]
+        team_4 = str(team_4)
+        
+        
+        insert_stmt = ("INSERT INTO team(Team_name,Leader_name, Name_1, Name_2, Name_3, Name_4)" "VALUES (%s, %s, %s, %s, %s, %s)")
+        data = (team_name, team_lead, team_1, team_2, team_3, team_4)
+       
+        new_con, conny = connection()
+    
+    
+    
+       #connect.execute("INSERT INTO database.task (ID, Team_name, lead_name, firstname, secondname, thirdname, fourthname) VALUES (?,?,?,?,?,?,?)")
+        new_con.execute(insert_stmt, data)
+        conny.commit()
+        new_con.close()
+        conny.close()
+        
+    return render_template('teamdet.html')     
+
+
+@app.route('/append_task', methods=["GET", "POST"])
+def append_task():
+    if request.method == "GET":
+        
+        #team_id = request.form["team_id"]
+        #team_id = str(team_id)
+        #print(team_id)
+      
+    
+        team_name = request.form["team_name"]
+        team_name = str(team_name)
+        print(team_name)
+        
+        team_lead = request.form["team_leader"]
+        team_lead = str(team_lead)
+        print(team_lead)
+        
+        team_1 = request.form["team_1"]
+        team_1 = str(team_1)
+        
+        
+        team_2 = request.form["team_2"]
+        team_2 = str(team_2)
+        
+        team_3 = request.form["team_3"]
+        team_3 = str(team_3)
+        
+        team_4 = request.form["team_4"]
+        team_4 = str(team_4)
+        
+        
+        insert_stmt = ("INSERT INTO team(Team_name,Leader_name, Name_1, Name_2, Name_3, Name_4)" "VALUES (%s, %s, %s, %s, %s, %s)")
+        data = (team_name, team_lead, team_1, team_2, team_3, team_4)
+       
+        new_con, conny = connection()
+    
+    
+    
+       #connect.execute("INSERT INTO database.task (ID, Team_name, lead_name, firstname, secondname, thirdname, fourthname) VALUES (?,?,?,?,?,?,?)")
+        new_con.execute(insert_stmt, data)
+        conny.commit()
+        new_con.close()
+        conny.close()
+        
+    return render_template('teamdet.html')     
+
     
 
 
