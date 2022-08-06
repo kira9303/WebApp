@@ -9,6 +9,7 @@ from flask import abort
 from flask import make_response
 #from flask_mysqldb import MySQL
 import mysql.connector as mysql
+import datetime as dt
 
 
 
@@ -27,7 +28,7 @@ def connection():
     
 
 
-application = app = Flask(__name__, template_folder='templates')
+application = app = Flask(__name__, template_folder='templates', static_folder='static')
 
 @app.route('/success/<name>')
 def success(name):
@@ -141,6 +142,8 @@ def task():
         print(detail)
         
         
+        
+        
         insert_stmt = ("INSERT INTO tasks(id,task_name, task)" "VALUES (%s, %s, %s)")
         data = (task_id, password, detail)
        
@@ -207,37 +210,43 @@ def team():
 
 @app.route('/append_task', methods=["GET", "POST"])
 def append_task():
-    if request.method == "GET":
+    if request.method =="GET":
+        return render_template("append.html")
+    
+    if request.method == "POST":
         
         #team_id = request.form["team_id"]
         #team_id = str(team_id)
         #print(team_id)
       
     
-        team_name = request.form["team_name"]
-        team_name = str(team_name)
-        print(team_name)
+        team_id = request.form["id_team"]
+        team_id = str(team_id)
+        print(team_id)
         
-        team_lead = request.form["team_leader"]
-        team_lead = str(team_lead)
-        print(team_lead)
+        status = request.form["status"]
+        status = str(status)
+        print(status)
         
-        team_1 = request.form["team_1"]
-        team_1 = str(team_1)
-        
-        
-        team_2 = request.form["team_2"]
-        team_2 = str(team_2)
-        
-        team_3 = request.form["team_3"]
-        team_3 = str(team_3)
-        
-        team_4 = request.form["team_4"]
-        team_4 = str(team_4)
+        start = request.form["start_date"]
+        start = str(start)
         
         
-        insert_stmt = ("INSERT INTO team(Team_name,Leader_name, Name_1, Name_2, Name_3, Name_4)" "VALUES (%s, %s, %s, %s, %s, %s)")
-        data = (team_name, team_lead, team_1, team_2, team_3, team_4)
+        end = request.form["end_date"]
+        end = str(end)
+        
+        task_id = request.form["task_id"]
+        task_id = str(task_id)
+        
+    
+        #start_date = dt.datetime.strptime(start, '%Y-%b-%d')
+        #end_date = dt.datetime.strptime(end, '%Y-%b-%d')
+        
+  
+        
+        
+        insert_stmt = ("INSERT INTO append(id_team,status, start_date, end_date, id_task)" "VALUES (%s, %s, %s, %s, %s)")
+        data = (team_id, status, start, end, task_id)
        
         new_con, conny = connection()
     
@@ -249,7 +258,7 @@ def append_task():
         new_con.close()
         conny.close()
         
-    return render_template('teamdet.html')     
+    return render_template('append.html')     
 
     
 
