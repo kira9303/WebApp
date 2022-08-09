@@ -26,5 +26,9 @@ urlpatterns = [
     path("register", views.register_request, name="register"),
     path("login", views.login_request, name="login"),
     path("home", views.render_homepage, name="home"),
+
+    path("register_team", views.register_team, name="register_team"),
+    path("register_task", views.register_task, name="register_task")
+
     #path("login", views.login_request, name="login")
 ]
