@@ -52,11 +52,11 @@ class Task(models.Model):
     task_name = models.CharField(max_length=30)
     team_name = models.CharField(max_length=20)
     status = models.CharField(max_length=30, choices=status_choice, default="IN_PROGRESS")
-    started_at = models.DateTimeField()
-    completed_at = models.DateTimeField()
+    started_at = models.DateField()
+    completed_at = models.DateField()
 
     def __str__(self):
-        return self.name
+        return self.task_name
 
     def ret_status(self):
         return self.status
