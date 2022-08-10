@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -16,8 +17,34 @@ status_choice = (
     (done, "done"),
 )
 
+user = "USER"
+team_leader = "TEAM_LEADER"
+team_member = "TEAM_MEMBER"
 
-class User(models.Model):
+
+this_status = (
+    (user, "user"),
+    (team_leader, "team_leader"),
+    (team_member, "team_member"),
+    # ....
+)
+
+from django.contrib.auth.models import AbstractUser
+
+
+
+
+# Create your models here.
+'''class CustomUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    role_status = models.CharField(max_length=30, choices=this_status, default="USER")
+
+    USERNAME_FIELD = 'user'
+
+    REQUIRED_FIELDS = '__all__'''
+
+
+'''class User(models.Model):
     id = models.IntegerField(primary_key=True)
     username = models.CharField(max_length=25)
     email = models.EmailField()
@@ -30,7 +57,7 @@ class User(models.Model):
         return self.email
 
     def _ret_pass(self):
-        return self.password
+        return self.password'''
 
 
 

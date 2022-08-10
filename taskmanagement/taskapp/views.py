@@ -1,11 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from django.contrib.auth import logout
+from django.contrib import auth
 
 # Create your views here.
 
 from django.shortcuts import  render, redirect
-from .forms import NewUserForm, TeamForm, TaskForm
-from .models import Team, User, Task
+from .forms import TeamForm, TaskForm, NewUserForm
+from .models import Team, Task
 from django.contrib.auth import login, authenticate #add this
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm #add this
@@ -43,11 +45,11 @@ def register_request(request):
 
 @login_required(login_url="login")
 def render_homepage(request):
-	if request.method == "POST" or request.method == "GET":
-		team = Team.objects.all()
-		content = {"content": team}
 
-		return render(request = request, template_name="homepage.html", context=content)
+	if request.method == "POST" or request.method == "GET":
+		task = Task.objects.all()
+
+		return render(request, "homepage.html", {'tasks' :task})
 
 '''def register_team(request):
 	if request.method == "POST":
@@ -103,6 +105,14 @@ def register_task(request):
 		context['form'] = form
 	context['form'] = TaskForm()
 	return render(request, "task.html", context)
+
+@login_required(login_url='login')
+def logout(request):
+
+	auth.logout(request)
+	message = "User logged out successfully!"
+	return redirect(login_request)
+
 
 
 
